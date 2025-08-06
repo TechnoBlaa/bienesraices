@@ -7,28 +7,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function darkMode() {
 
-    const prefiereDarkMode =window.matchMedia('(prefers-color-scheme: dark)');
-
-    //console.log(prefiereDarkMode.matches);
-
-    if(prefiereDarkMode.matches) {
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.remove('dark-mode');
-    }
-
-    prefiereDarkMode.addEventListener('change', function() {
-        if(prefiereDarkMode.matches) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    });
-
     const botonDarkMode = document.querySelector('.dark-mode-boton');
 
-    botonDarkMode.addEventListener('click', function(){
+    const modoOscuroGuardado = localStorage.getItem('modoOscuro');
+
+    if (modoOscuroGuardado === 'true') {
+        document.body.classList.add('dark-mode');
+    } else if (modoOscuroGuardado ==='false') {
+        document.body.classList.remove('dark-mode');
+    } else {
+
+        const prefiereDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+        if (prefiereDarkMode.matches) {
+            document.body.classList.add('dark-mode');
+        }
+    }
+
+    botonDarkMode.addEventListener('click', function () {
         document.body.classList.toggle('dark-mode');
+
+        const modoOscuroActivo = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modoOscuro', modoOscuroActivo);
     });
 }
 
